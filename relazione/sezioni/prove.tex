@@ -1,0 +1,230 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../relazione.tex
+% !TEX spellcheck = it-IT
+
+\clearpage
+\section{Prove effettuate}
+
+Una volta implementato il codice dei vari algoritmi e dopo aver verificato l'assenza di errori, sono state effettuate varie prove, i cui risultati vengono riportati nelle successive sotto sezioni.
+
+C'è da osservare che nella maggior parte delle prove, gli algoritmi presi in cosiderazione sono stati eseguiti $1000$ volte, pertanto il rapporto $\frac{\text{\# sol. ottime}}{\text{\# esecuzioni}}$ rappresenta una stima della probabilità di trovare la soluzione ottima per un determinato problema e questa stima risulta essere sempre meno accurata al crescere della dimensione del problema.
+
+Di conseguenza la stima della probabilità di trovare una soluzione ottima per $4$-Regine risulta molto più accurata della stima per $10$-Regine, questo a casua della crescita esponziale del numero degli stati del problema.
+
+\subsection{Confronto tra i vari algoritmi}
+
+La prima prova effettuata è stata l'esecuzione di Hill Climbing, Hill Climbing con mosse laterali e Hill Climbing stocastico per risolvere $N$-Regine a partire da $4$-Regine fino a $25$-regine.
+
+Ognuno dei problemi è stato risolto sia a partire da uno stato iniziale fisso, ovvero con tutte le regine nella prima riga, sia da uno stato generato casualmente. Inoltre, per ognuno di questi casi sono state effettuate $1000$ esecuzioni di ogni algoritmo.
+
+Dai risultati ottenuti, riportati nelle tabelle \ref{table:allinitial} e \ref{table:allrandom}, si può osservare che:
+
+\begin{itemize}
+
+\item Hill Climbing laterale riesce quasi sempre a trovare una soluzione ottima, mentre le Hill Climbing normale e stocastico fanno sempre più fatica a raggiungere l'ottimo.
+
+\item Hill Climbing stocastico non migliora di molto l'Hill Climbing normale, solamente in alcuni casi trova più soluzioni ottime richiedendo più mosse. Tuttavia, uno dei vantaggi della versione stocastica di Hill Climbing è quello che dovrebbe trovare soluzioni migliori e la prova effettuata non tiene conto della qualità delle soluzioni sub-ottime. Pertanto è stata effettuata un'altra prova tenendo conto anche di questo. Tale prova è descritta nella sezione §\ref{prove:stocastico}.
+
+\item Hill Climbing riesce sempre a trovare a trovare una soluzione a 4-regine partendo dallo stato inizile fisso in 3 mosse. Questo perché, le azioni possibili per la prima mossa sono \texttt{(1,3)} oppure \texttt{(2,3)} e una caratteristica delle soluzioni ottime di 4-Regine è di avere la forma \texttt{<X,0,3,X>} o \texttt{<X,3,0,X>}. Partendo da uno stato casuale invece non sempre viene scelta una di queste mosse, arrivando così a delle soluzioni sub-ottime. 
+
+\item Il problema 6-Regine risulta essere particolarmente difficile da risolvere, sia a partire da uno stato fisso che da uno stato casuale. \`{E} stato quindi affrontato più nel dettaglio applicando solamente Hill Climbing laterale dal momento che è l'algoritmo che sta dando i risultati migliori. La descrizione di questa prova è nella sezione §{prove:6regine}.
+\end{itemize}
+
+\input{sezioni/tabelle/all_initial.tex}
+\input{sezioni/tabelle/all_random.tex}
+
+\subsection{Riavvi casuali}
+
+In questa prova sono state eseguite le precedenti versioni di Hill Climbing utilizzando però la versione a riavvio casuale.
+
+Anche in questo caso i problemi risolti vanno da $4$-Regine a $25$-Regine, ognuno risolto $100$ volte, sia a partire dallo stato iniziale con tutte le regine su una stessa riga, che a partire da uno stato generato casualmente.
+
+A differenza della prova precedente, sono stati presi in considerazioni i riavvii necessari per trovare una soluzione ottima piuttosto del numero delle mosse per ottenere una soluzione ottima.
+
+Così facendo è stato possibile verificare che il numero medio di riavvii coincida con quanto atteso, ovvero $\frac{1}{p}$, dove $p$ è la probabilità di trovare una soluzione ottima.
+
+I risultati ottenuti sono riportati nella tabella \ref{table:riavvii} e la differenza dei valori ottenuti da quelli attesi viene evidenziata nella nel grafico della figura \ref{fig:riavvii}.
+
+Dal grafico si può notare che la maggior parte dei risultati non si discosta di molto, ci sono solamente alcuni casi in cui la differenza è notevole e questo può essere causato dal numero ridotto di prove effettuate, che per motivi di tempo sono state limitate a 100.
+In ogni caso, la differenza media risulta essere inferiore al $20\%$ per Hill Climbing e poco più del $15\%$ per Hill Climbing stocastico.
+
+\input{sezioni/tabelle/riavvii.tex}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{./immagini/diff-riavvii.png}
+\caption{Valore assoluto della differenza tra il numero di riavvi attesi e quello medio, espresso in percentuale.}
+\label{fig:riavvii}
+\end{figure}
+
+\FloatBarrier
+\subsection{8-Regine}\label{prove:8regine}
+
+La prima volta che sono state eseguite le varie versioni di Hill Climbing per risolvere il problema delle $8$-Regine, è risultata una probabilità di trovare una soluzione ottima molto più elevata di quella riportata sul libro del corso.
+In particolare, stando a quanto riportato, la probabilità di trovare una soluzione ottima con Hill Climbing a partire da uno stato casuale è del $14\%$, mentre alla prima esecuzione è stata stimata essere del $28\%$ .
+
+\`{E} stato quindi ricontrollato il codice prodotto è stato scoperto un errore nella funzione che genera gli stati del problema in modo casuale, la quale ogni tanto generava degli stati inziali con una regina posizionata fuori dalla scacchiera. 
+Ad esempio nel caso delle $8$-Regine potevano venir prodotti degli stati iniziali con una regina nella riga $8$ anche se la scacchiera aveva solamente le righe da $0$ a $7$.
+Il problema che veniva risolto era quindi più facile e pertanto la probabilità di ottenere una soluzione ottima risultava più elevata.
+
+Una volta corretto l'errore è stato rieseguito l'algoritmo per risolvere $100.000$ volte $8$-Regine in modo da poter controllare che fosse effettivamente quello il problema e, come si può notare dalla tabella \ref{table:8regine}, i risultati ottenuti si avvicinano molto ai risultati attesi.
+
+L'errore nella generazione degli stati casuali ha influenzato anche i risultati di altre prove, le quali sono state ri-eseguite in modo da ottenere dei valori correttti. I risultati presenti nelle varie tabelle di questa relazione sono quelli ottenuti con la versione corretta del codice.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|l|r|r|r|}
+\hline
+\multicolumn{4}{|c|}{Hill Climbing} \\ \hline
+ & \multicolumn{1}{c|}{Probabilità sol. ottima} & \multicolumn{1}{c|}{Mosse caso ottimo} & \multicolumn{1}{c|}{Mosse caso sub-ottimo} \\ \hline
+Versione errata & 28,19\% & 3,76 & 2,87 \\ \hline
+Versione corretta & 13,9\% & 4,07 & 3,06 \\ \hline
+Valori attesi & 14\% & 4 & 3 \\ \hline
+\multicolumn{4}{|c|}{Hill Climbing con mosse laterali (100)} \\ \hline
+& \multicolumn{1}{c|}{Probabilità sol. ottima} & \multicolumn{1}{c|}{Mosse caso ottimo} & \multicolumn{1}{c|}{Mosse caso sub-ottimo} \\ \hline
+Versione errata & 96,92\% & 13,39 & 70,90 \\ \hline
+Versione corretta & 94,3\% & 19,06 & 61,26 \\ \hline
+Valori attesi & 94\% & 21 & 64 \\ \hline
+\end{tabular}
+}
+\caption{8-Regine: confronto tra i dati errati, quelli corretti e quelli attesi.}
+\label{table:8regine}
+\end{table}
+
+\FloatBarrier
+\subsection{Hill Climbing Stocastico}\label{prove:stocastico}
+
+Dal momento che nella prima prova effettuata l'algoritmo Hill Climbing Stocastico si è rilevato meno performante dell'Hill-Climbing classico, sia in termini di tempo di esecuzione, che in numero di soluzioni ottime trovate. \`{E} stata eseguita un'ulteriore prova per verificare se le soluzioni sub-ottime trovate dalla versione stocastica siano  migliori delle soluzioni sub-ottime trovate dalla versione classica.
+
+I risultati ottenuti sono riportati nella tabella \ref{table:stocastico} e vengono riassunti nelle figure \ref{fig:stocastico1} e \ref{fig:stocastico2}, dalle quali si può notare che:
+
+\begin{itemize}
+\item a partire da uno stato casuale, la differenza del numero delle minacce è minima;
+\item a partire dallo stato con tutte le regine nella prima riga, le soluzioni sub-ottime ottenute con Hill Climbing sono migliori rispetto a quelle ottenute con la versione stocastica. 
+\end{itemize}
+
+Pertanto si può concludere che Hill Climbing Stocastico non è ideale per risolvere il problema delle N-Regine.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{./immagini/stocastico1.png}
+\caption{Differenza tra le soluzioni sub-ottime trovate con Hill Climbing e con Hill Climbing stocastico.}
+\label{fig:stocastico1}
+\end{figure}
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{./immagini/stocastico2.png}
+\caption{Numero di mosse effettaute da Hill Climbing e Hill Climbing stocatico}
+\label{fig:stocastico2}
+\end{figure}
+
+\input{sezioni/tabelle/stocastico.tex}
+
+\FloatBarrier
+\subsection{Hill Climbing Laterale e 6-Regine}\label{prove:6regine}
+
+Nella prima prova effettuata è emerso che Hill Climbing e le sue varianti hanno dei problemi a risolvere 6-Regine, sia a partire dallo stato iniziale che a partire da uno stato generato casualmente.
+
+Si è quindi provato ad eseguire Hill Climbing con mosse laterali tenendo traccia del numero di mosse medie necessarie per ottenere una soluzione sub-ottima, provando a risolvere $N$-Regine con $N$ da $6$ a $9$. I risultati ottenuti sono riportati nella tabella \ref{table:6regine-lat}.
+
+\begin{table}[]
+\centering
+\begin{tabular}{|c|r|r|r|}
+\hline
+\multicolumn{4}{|c|}{Hill Climbing Laterale (100 mosse, stato iniziale fisso)} \\ \hline
+N & \multicolumn{1}{c|}{Sol. Ottime} & \multicolumn{1}{c|}{Mosse medie caso ottimo} & \multicolumn{1}{c|}{Mosse medie caso sub-ottimo} \\ \hline
+6 & 881 & 34,04 & 103,86 \\ \hline
+7 & 948 & 14,13 & 29,71 \\ \hline
+8 & 916 & 20,74 & 100,70 \\ \hline
+9 & 962 & 22,32 & 94,47 \\ \hline
+\multicolumn{4}{|c|}{Hill Climbing Laterale (100 mosse, stato iniziale casuale)} \\ \hline
+N & \multicolumn{1}{c|}{Sol. Ottime} & \multicolumn{1}{c|}{Mosse medie caso ottimo} & \multicolumn{1}{c|}{Mosse medie caso sub-ottimo} \\ \hline
+6 & 814 & 32,66 & 101,71 \\ \hline
+7 & 912 & 12,88 & 31,71 \\ \hline
+8 & 930 & 18,90 & 61,49 \\ \hline
+9 & 924 & 19,67 & 71,61 \\ \hline
+\end{tabular}
+\caption{Numero medio di mosse effettuate da Hill Climbing Laterale}
+\label{table:6regine-lat}
+\end{table}
+
+Osservando il numero di mosse medie in caso di fallimento è possibile riuscire a distinguere quando l'algoritmo termina perché finisce in un minimo locale o quando termina perché finisce in un plateaux o spalla.
+
+Infatti, se il numero medio di mosse è vicino al numero di mosse massime l'algoritmo ha terminato l'esecuzione in quanto è entrato in un plateux dal quale non è riuscito ad uscirne, mentre se il numero di mosse è inferiore al numero massimo, l'algoritmo ha terminato l'esecuzione a causa di un minimo locale, ovvero è finito in uno stato in cui tutti i suoi successori erano peggiore dello stato corrente.
+
+Pertanto il problema che incontra HIll Climbing con $100$ mosse laterali nel risolvere $6$-Regine è causato da un plateaux che fa ciclare l'algoritmo finché non termina le mosse a disposizione.
+
+Sono state quindi aumentate le mosse laterali a disposizione dell'algoritmo, da $100$ a $1000$, in modo da aumentare la probabilità che l'algoritmo riesca a superare il plateaux.
+
+\begin{table}[]
+\centering
+
+\begin{tabular}{|c|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{Hill Climbing Laterale (1000 mosse, stato iniziale fisso)} \\ \hline
+N & Sol. Ottime & Mosse medie caso ottimo & Mosse medie caso sub-ottimo \\ \hline
+6 & \multicolumn{1}{r|}{1000} & \multicolumn{1}{r|}{48,52} & \multicolumn{1}{r|}{0} \\ \hline
+\multicolumn{4}{|c|}{Hill Climbing Laterale (1000 mosse, stato iniziale casuale)} \\ \hline
+N & Sol. Ottime & Mosse medie caso ottimo & Mosse medie caso sub-ottimo \\ \hline
+6 & \multicolumn{1}{r|}{937} & \multicolumn{1}{r|}{48,30} & \multicolumn{1}{r|}{1001,93} \\ \hline
+\end{tabular}
+
+\caption{Hill Climbing con $1000$ mosse laterali per risolvere $6$-Regine}
+\label{table:6regine-1000}
+\end{table}
+
+Dalla tabella \ref{table:6regine-1000} si può notare che:
+\begin{itemize}
+\item l'algoritmo riesce sempre a trovare una soluzione ottima partendo dallo stato con tutte le regine nella prima riga, questo grazie al maggior numero di mosse laterali che gli permetto di oltrepassare dei plateaux che richiedono più di $100$ mosse;
+\item il numero medio di mosse per trovare una soluzione ottima è aumentato, questo perché alcune delle soluzioni trovate dall'algoritmo richiedono più di $100$ mosse;
+\item ci sono ancora dei plateaux che l'algoritmo non riesce a scavalcare e che vengono incontrati solamente partendo da uno stato casuale.
+\end{itemize}
+
+Per verificare se l'aumento delle mosse possa permettere di superare ulteriori plateux, sono stati tracciati gli stati in cui l'algoritmo si blocca perché esaurisce tutte le mosse a disposizione.
+
+\`{E} stata così ottenuta la figura \ref{fig:ciclo} dalla quale si può vedere come l'algoritmo è rimasto incastrato in un plateaux che corrisponde ad un minimo locale, ovvero un insieme di stati tra loro raggiungibili ai quali corrisponde un minimo locale della funzione di valutazione e che hanno come vicini altri stati dell'insieme oppure stati peggiori.
+In questo caso l'aumento del numero delle mosse laterali possibili non porterebbe alcuni miglioramento, in quanto l'algoritmo non ha modo di superare questa tipologia di platueax se non spostandosi su uno stato peggiore.
+
+La maggiore difficoltà è quindi causata dalla funzione euristica utilizzata per scegliere le mosse, la quale è caratterizzata da questi minimi locali e plateux minimi che fanno terminare Hill Climbing con una soluzione sub-ottima e probabilmente l'utilizzo di un'euristica differente permette di evitare questi problemi.
+
+In ogni caso c'è da tenere in considerazione che $6$-Regine ha solamente $4$ soluzioni mentre altri problemi più complessi come $7$ e $8$-Regine hanno rispettivamente $40$ e $92$ possibili soluzioni distinte\footnote{Questi risultati sono stati ottenuti enumerando tutte le soluzioni di $N$-Regine risolto come CSP. Maggiori informazioni sono riportate in appendice \ref{app:csp}}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width=\textwidth]{./immagini/ciclo.png}
+\caption{Grafo che rappresenta gli stati visitati da Hill Climbing con $1000$ mosse laterali quando incontra un plateaux che coincide con un minimo locale. Lo stato indicato in giallo è un'alternativa che l'algoritmo \textbf{avrebbe} potuto prendere per sorpassare il primo plateaux e che forse avrebbe evitato il secondo plateux.}
+\label{fig:ciclo}
+\end{figure}
+
+\FloatBarrier
+\subsection{Simulated Annealing}
+
+Come ultima prova è stato eseguito l'algoritmo Simulated Anneling per confrontare le sue prestazioni con quelle ottenute dai vari Hill Climbing.
+
+Sono state quindi eseguite $100$ prove utilizzando come funzione di raffreddamento
+
+\begin{align*}
+temperature\_fn(t) &= 20 e^{-0,05t} \text{ se }  t < 1000 \\
+&= 0  \text{ se }  t \geq 1000
+\end{align*}
+
+Dai risultati riportati nella tabella \ref{table:sa} si può osservare che l'algoritmo richiede più tempo per l'esecuzione e in alcuni casi non riesce a trovare neanche una soluzione ottima.
+Questo può essere causato dal ridotto numero di prove così come dalla scelta di una funzione di raffreddamento non ottimale.
+
+Infatti, la funzione di raffreddamento utilizzata è un variante di quella proposta dal libro di riferimento con dei parametri leggermente modificati. Questo perché la funzione proposta produce dei risultati pessimi.
+
+Ad esempio, utilizzando la funzione $termperature\_fn(t)$ per risolvere $6$-Regine sono state ottenute $514$ soluzioni ottime su $1000$ tentativi, mentre con la funzione proposta 
+dal libro, $temperature\_fn\_libro(t)$ sono state ottenute solamente $2$ soluzioni ottime.
+
+\begin{align*}
+temperature\_fn\_libro(t) &= 20 e^{-0,005t} \text{ se }  t < 100 \\
+&= 0  \text{ se }  t \geq 100
+\end{align*}
+
+L'algoritmo Simulated Anneling riesce quindi ad ottenere risultati migliori di Hill Climbing e HIll Climbing stocastico, richiedendo però più tempo. 
+Hill Climbing laterale risulta comunque migliore, sia in termini di soluzioni trovate che in termini di tempo d'esecuzione, anche nel problema delle $6$-Regine, dove Simulated Anneling dovrebbe essere avvantaggiato dal momento che può uscire da un plateaux minimo con una mossa peggiorativa.
+
+\input{sezioni/tabelle/simulated_annealing.tex}

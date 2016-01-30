@@ -1,0 +1,31 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../relazione.tex
+% !TEX spellcheck = it-IT
+\clearpage
+\section{Conclusioni}
+
+Dalle prove effettuate, l'algoritmo di ricerca locale migliore risulta essere l'Hill Climbing con 100 mosse laterali, il quale riesce a trovare quasi sempre una soluzione ottima e in un tempo inferiore rispetto agli altri algoritmi.
+
+Tuttavia bisogna tenere in considerazione che la prova riguarda solamente un problema e sempre con la stessa funzione euristica. Non è quindi detto che quanto ottenuto sia valido in generale.
+
+Inoltre, l'algoritmo Simulated Annealing ha come iper-parametro la funzione di raffreddamento la quale influsisce molto sulla qualità delle soluzioni trovate e quella utilizzata nella prova non è detto che sia la migliore per affrontare il problema delle $N$-Regine, quindi può essere che una funzione diversa porti il Simulated Annealing ad essere migliore dell'Hill Climbing laterale.
+
+\subsection{Consuntivo}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|c|l|}
+\hline
+Ore & \multicolumn{1}{c|}{Attività}                                                       \\ \hline
+1   & Analisi del codice Python esistente e definizione dell'architettura della soluzione \\ \hline
+15  & Codifica                                                                            \\ \hline
+1   & Pianificazione delle prove                                                          \\ \hline
+-   & Esecuzione automatizzata delle prove                                                \\ \hline
+2   & Analisi dei risultati ottenuti                                                      \\ \hline
+1   & Confronto con l'approccio CSP                                                       \\ \hline
+15  & Redazione della relazione                                                           \\ \hline
+\end{tabular}
+\end{table}
+
+\FloatBarrier

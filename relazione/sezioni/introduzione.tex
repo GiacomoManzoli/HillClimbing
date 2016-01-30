@@ -1,0 +1,60 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../relazione.tex
+% !TEX spellcheck = it-IT
+
+\section{Introduzione}
+
+Affrontare un problema di ricerca nello spazio degli stati con una ricerca basata su un albero può richiedere troppa memoria e rendere impossibile risolvere il problema.
+
+Ci sono però delle tipologie di problemi che richiedono la ricerca di una configurazione ottima oppure di una configurazione che rispetti determinati vincoli.
+Per questo tipo di problemi non interessa il cammino che porta alla soluzione, ma interessa solamente la descrizione dello stato goal.
+
+In questo caso conviene utilizzare un algoritmo di ricerca locale, ovvero un algoritmo che mantiene in memoria un unico stato e che tenta di migliorarlo applicando l'azione migliore tra le possibili, renendo così costante il consumo di memoria.
+
+Dal momento che un algoritmo di ricerca locale non tiene traccia del percorso che ha fatto, non è possibile effettuare il back-tracking delle azioni effettuate, pertanto possono verificarsi delle situazioni in cui l'algoritmo si blocca in uno stato dal quale non è possibile raggiungere stati migliori, ma che non rappresenta una soluzione del problema.
+
+L'implementazione più semplice della ricerca locale è data dall'algoritmo HIll Climbing, il quale cerca di passare dallo stato corrente allo stato migliore tra tutti quelli possibili e, quando non sono presenti stati migliori, termina la ricerca producendo una soluzione sub-ottima.
+
+La scelta dell'azione migliore viene fatta utilizzando una funzione euristica che valuta la ``distanza'' che c'è tra lo stato e uno stato goal. La scelta di questa funzione risulta particolarmente importante, sia perché influenza il numero di mosse necessarie per trovare una soluzione, sia perché la presentaza di massimi o minimi locali può portare l'algoritmo di ricerca locale a fermarsi senza trovare una soluzione.
+
+Per diminuire la probabilità che l'algoritmo di ricerca termi trovando una soluzione sub-ottima, sono state proposte delle varianti:
+
+\begin{itemize}
+\item \textbf{Hill Climbing Stocastico}: effettua una ricerca Hill Climbing, scegliendo un'azione tra tutte quelle che migliorano lo stato corrente. La probabilità che un'azione venga scelta è influenza dalla bontà dell'azione.
+\item \textbf{HIll Climbing con mosse laterali}: effeutta una ricerca Hill Climbing con la differenza che, quando non esistono azioni migliori, vengono prese in considerazione anche le azioni che non peggiorano lo stato attuale. La possibilità di poter eseguire anche queste mosse introduce la possibilità di ciclare infinitamente su un insieme di stati, pertanto conviene limitare il numero di mosse possibili.
+\item \textbf{Hill Climbing con riavvio casuale}: effettua una ricerca HIll Climbing e se non viene trovata una soluzione la ricerca viene riavviata a partire da uno stato casuale. I riavvi terminano quando viene trovata una soluzione ottima.
+\item \textbf{Simulated Annealing}: effettua la ricerca scegliendo casualmente lo stato successore. Vengono presi in considerazione anche stati peggiori dello stato attuale, tuttavia la probabilità di spostarsi su uno stato peggiore diminuisce all'avanzare della ricerca.
+\end{itemize}
+
+\subsection{N-Regine}
+
+\`{E} un problema che consiste nel disporre $N$ regine su una scacchiera di dimensione $N * N$ in modo che non si minaccino tra loro.
+
+Questo problema risulta adatto per testare gli algoritmi di ricerca locale, in quanto interessa solamente la disposizione finale della scacchiera e non le mosse necessarie a raggiungere tale configurazione.
+
+Inoltre, trattandosi di un problema combinatori, il numero di possibile di stati risulta essere $\frac{(N*N)!}{N! (N*N - N)!}$ quindi applicare un algortimo di ricerca ad albero potrebbe richiedere troppa memoria. Ad esempio, con $N=8$ si hanno $4.426.165.368$ possibili stati.
+
+Tuttavia, il numero di stati può essere ridotto aggiungendo il vincolo che ci sia una regina per colonna, così facendo i possibili stati diventano $N^N$ e ogni stato ha $N * (N-1)$ successori.
+Questo nuovo vincolo non influsce sul numero di soluzioni dal momento che uno stato con due regine sulla stessa colonna non sarà mai una soluzione del problema.
+
+Come euristica per valutare la bontà di uno stato viene utilizzato il numero di coppi di regine che si minacciano tra loro, così facendo l'obiettivo dell'algoritmo di ricerca diventa quello di trovare un stato il cui numero di minacce risulta essere 0.
+
+\subsection{Attività svolte}
+
+Il progetto comprende le seguenti attività:
+
+\begin{itemize}
+\item Analisi del codice già disponibile nel repository del libro ``Intelligenza Artificiale: Un approccio moderno''\footnote{https://code.google.com/p/aima-python/} relativo alla ricerca Hill Climbing;
+\item Implementazione degli algoritmi precedentemente menzionati:
+	\begin{itemize}
+	\item Hill Climbing classico;
+	\item Hill Climbing stocastico;
+	\item Hill Climbing con mosse laterali;
+	\item Hill Climbing a riavvio casuale;
+	\item Simulated Annealing.
+	\end{itemize}
+\item Modellazione e risoluzione del problema delle N-Regine utilizzando i vari algoritmi sviluppati;
+\item Analisi dei risultati delle prove effettuate.
+\end{itemize}
+

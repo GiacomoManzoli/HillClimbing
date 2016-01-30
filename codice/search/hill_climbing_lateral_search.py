@@ -3,7 +3,7 @@
 from base_search import BaseSearch
 from node import Node
 
-import util
+from util import util
 
 
 
@@ -41,14 +41,18 @@ class HillClimbingLateralSearch(BaseSearch):
                 
                 if neighbor_value == current_value:
                     # Mossa laterale
+                    #print 'Mossa laterale'
                     lateral_move -= 1
 
                 if neighbor_value < current_value:
                     # Mossa buona, resetto le mosse laterali
                     lateral_move = self.__lateral_move
                 else:
+                    if neighbor_value > current_value:
+                        break
                     # Mossa che non migliora, se non posso fare delle mosse laterali termino
-                    if lateral_move == 0:
+                    if lateral_move <= 0:
+                        #print 'EXIT'
                         break
             else:
                 neighbor = util.argmax_random_tie(neighbors,
@@ -66,8 +70,10 @@ class HillClimbingLateralSearch(BaseSearch):
                     # Mossa buona, resetto le mosse laterali
                     lateral_move = self.__lateral_move
                 else:
+                    if neighbor_value > current_value:
+                        break
                     # Mossa che non migliora, se non posso fare delle mosse laterali termino
-                    if lateral_move == 0:
+                    if lateral_move <= 0:
                         break
             #print cnt, current, problem.value(current.state), neighbor, problem.value(neighbor.state)
             cnt += 1

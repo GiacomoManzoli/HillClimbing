@@ -5,7 +5,7 @@ from node import Node
 from hill_climbing_search import HillClimbingSearch
 
 
-import util
+from util import util
 
 
 

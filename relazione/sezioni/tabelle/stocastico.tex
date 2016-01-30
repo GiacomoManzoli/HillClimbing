@@ -1,0 +1,36 @@
+% Please add the following required packages to your document preamble:
+% \usepackage{graphicx}
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline
+   & \multicolumn{3}{c|}{Hill Climbing}          & \multicolumn{3}{c|}{Hill Climbing stocastico} \\ \hline
+N  & Mosse medie & Sol. Ottime & Val. Sub-ottimo & Mosse medie  & Sol. Ottime  & Val. Sub-ottimo \\ \hline
+4  & 1,48        & 375         & 1,123           & 1,81         & 363          & 1,187           \\ \hline
+5  & 2,15        & 709         & 1,553           & 2,68         & 692          & 1,571           \\ \hline
+6  & 2,35        & 120         & 1,202           & 3,04         & 100          & 1,229           \\ \hline
+7  & 2,82        & 241         & 1,476           & 3,81         & 273          & 1,512           \\ \hline
+8  & 3,18        & 126         & 1,509           & 4,49         & 136          & 1,508           \\ \hline
+9  & 3,68        & 129         & 1,606           & 5,12         & 132          & 1,561           \\ \hline
+10 & 4           & 55          & 1,685           & 5,76         & 62           & 1,696           \\ \hline
+11 & 4,47        & 41          & 1,780           & 6,38         & 46           & 1,789           \\ \hline
+12 & 4,85        & 48          & 1,876           & 7,05         & 38           & 1,894           \\ \hline
+13 & 5,39        & 49          & 1,917           & 7,86         & 43           & 1,963           \\ \hline
+14 & 5,79        & 40          & 1,990           & 8,45         & 32           & 2,082           \\ \hline
+15 & 6,08        & 21          & 2,114           & 9,38         & 33           & 2,132           \\ \hline
+16 & 6,57        & 25          & 2,189           & 9,94         & 31           & 2,220           \\ \hline
+17 & 7           & 31          & 2,189           & 10,63        & 16           & 2,264           \\ \hline
+18 & 7,51        & 17          & 2,287           & 11,42        & 20           & 2,303           \\ \hline
+19 & 7,93        & 19          & 2,435           & 12,22        & 19           & 2,389           \\ \hline
+20 & 8,33        & 18          & 2,469           & 12,66        & 13           & 2,508           \\ \hline
+21 & 8,81        & 15          & 2,457           & 13,48        & 6            & 2,487           \\ \hline
+22 & 9,29        & 16          & 2,513           & 14,28        & 12           & 2,605           \\ \hline
+23 & 9,51        & 16          & 2,590           & 15,08        & 14           & 2,628           \\ \hline
+24 & 10,17       & 19          & 2,651           & 15,85        & 17           & 2,711           \\ \hline
+25 & 10,52       & 14          & 2,736           & 16,56        & 19           & 2,723           \\ \hline
+\end{tabular}
+}
+\caption{Confronto tra Hill Climbing e Hill Climbing stocastico. I risultati sono la media di 1000 prove, eseguite a partire da uno stato generato casualmente}
+\label{table:stocastico}
+\end{table}

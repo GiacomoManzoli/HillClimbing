@@ -78,7 +78,7 @@ class NQueens(Problem):
         return minacce
 
     def random_state(self):
-        state = [random.randint(0, self.__board_size) for i in range(self.__board_size)]
+        state = [random.randint(0, self.__board_size-1) for i in range(self.__board_size)]
         return state
         
     @staticmethod

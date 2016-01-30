@@ -1,0 +1,10 @@
+\select@language {italian}
+\select@language {italian}
+\contentsline {table}{\numberline {1}{\ignorespaces Risultati medi di 1000 esecuzioni dei vari algoritmi a partire da uno stato iniziale fisso.\relax }}{9}{table.caption.4}
+\contentsline {table}{\numberline {2}{\ignorespaces Risultati medi di 1000 esecuzioni dei vari algoritmi a partire da uno stato iniziale generato casualmente.\relax }}{9}{table.caption.5}
+\contentsline {table}{\numberline {3}{\ignorespaces Risultati medi di 100 esecuzioni dell'Hill Climbing con riavvii casuali, utilizzando le varie versioni di Hill Climbing. Alcune differenze espresse in \% sono diverse da quelle attese, questo perch\IeC {\'e} la tabella riporta i risultati approssimati e le differenze sono state calcolate utilizzando i dati non approssimati.\relax }}{10}{table.caption.6}
+\contentsline {table}{\numberline {4}{\ignorespaces 8-Regine: confronto tra i dati errati, quelli corretti e quelli attesi.\relax }}{12}{table.caption.8}
+\contentsline {table}{\numberline {5}{\ignorespaces Confronto tra Hill Climbing e Hill Climbing stocastico. I risultati sono la media di 1000 prove, eseguite a partire da uno stato generato casualmente\relax }}{13}{table.caption.11}
+\contentsline {table}{\numberline {6}{\ignorespaces Numero medio di mosse effettuate da Hill Climbing Laterale\relax }}{15}{table.caption.12}
+\contentsline {table}{\numberline {7}{\ignorespaces Hill Climbing con $1000$ mosse laterali per risolvere $6$-Regine\relax }}{16}{table.caption.13}
+\contentsline {table}{\numberline {8}{\ignorespaces Risultati derivati dall'applicazione di Simulated Annealing. Per ogni problema sono state fatte $100$ prove.\relax }}{19}{table.caption.15}

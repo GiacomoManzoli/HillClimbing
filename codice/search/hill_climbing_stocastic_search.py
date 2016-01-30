@@ -3,7 +3,7 @@
 from base_search import BaseSearch
 from node import Node
 
-import util
+from util import util
 
 class HillClimbingStocasticSearch(BaseSearch):
     """Classe che effettua la ricerca hill climbing stocastica, ovvero sceglie l'azione da eseguire in modo causale tra tutte quelle che migliorano il valore della funzione di valutazione.

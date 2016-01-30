@@ -1,0 +1,61 @@
+% !TEX encoding = UTF-8
+% !TEX TS-program = pdflatex
+% !TEX root = ../relazione.tex
+% !TEX spellcheck = it-IT
+\clearpage
+\section{N-Regine come CSP}\label{app:csp}
+
+Il problema delle $N$-Regine può essere anche formulato come problema di soddisfacimento di vincoli, andando a codificare l'assenza di minacce con dei vincoli definiti sui possibili assegnamenti delle variabili. Una possibile formulazione è:
+\\ \\
+\textit{Variabili:}
+$$
+x_i \in \{0 \ldots N - 1\} \qquad i = 0 \ldots N-1
+$$
+\\ \\
+\textit{Vincoli:} $\qquad \qquad  \qquad \qquad  \qquad \forall i, j \in \{0 \ldots N - 1\}, \quad i \neq j$
+\begin{align*}
+x_i &\neq  x_j  \\
+x_i - x_j &\neq j - i \\
+x_i - x_j &\neq i - j  \\
+\end{align*}
+
+Con il problema così codificato è possibile utilizzare un risolutore di CSP che cerca di produrre un assegnamento di variabili in modo che tutti i vincoli siano soddisfatti.
+
+\`{E} stata fatta una prova utilizzando or-tools, un risolutore CSP manutenuto da Google, per verificare l'efficacia di questo approccio e per paragonarlo alla ricerca locale.
+
+\`{E} risultato che per risolvere $26$-Regine sotto forma di CPS e utilizzando il risolutore di default, sono necessari $846 ms$,
+Andando a modificare il criterio con il quale il risolutore assegna un valore alle variabili in modo che vengano assegnate prima le variabili con il dominio più piccolo e assegnate al valore più basso possibile, si riesce ad ottenere una soluzione in $5 ms$ e in circa $5$ secondi si ottiene una soluzione per $300$-Regine.
+
+Questa differenza di prestazioni deriva dal fatto che il risolutore CSP riesce ad utilizzare i vincoli per effettuare una riduzione dei domini delle variabili, riducendo così lo spazio di ricerca. 
+Inoltre è possibile ottimizzare la strategia di ricerca in modo che vengano assegnate per prime le variabili per cui si ha meno scelta, ovvero con un dominio più piccolo. 
+Così facendo il risolutore riesce a riconoscere prima se il ramo dell'albero che sta valutando porta ad una soluzione o meno.
+
+Con la ricerca locale, l'unica informazione che si ha a disposizione è la funzione euristica, la quale fornisce meno informazioni rispetto ai vincoli di un problema con vincoli.
+Quindi può succedere che la ricerca locale esplori un'insieme di stati che il risolutore CSP riesce a scartare perché rileva subito che non sono soluzioni.
+Inoltre, la ricerca locale è influenzata dallo stato iniziale: se vicino allo stato iniziale c'è uno stato a cui corrisponde un minimo locale della funzione euristica, l'algoritmo andrà probabilmente a bloccarsi in quello stato, mentre con un risolutore CSP non c'è questo problema perché lo stato iniziale è sempre lo stato in cui nessuna variabile è assegnata.
+
+Infine, $N$-Regine rientra nella categoria dei problemi combinatori, problemi che sono facilmente risolvibili con la programmazione a vincoli.
+
+\subsection{Enumerazione delle soluzioni di N-Regine}
+
+Un'altra caratteristica dei CSP è che una volta definito il modello, questo può essere utilizzato sia per trovare una soluzione ottima che per enumerare tutte le possibili soluzioni.
+
+Si è quindi utilizzato lo stesso modello per contare quante sono le soluzioni possibili delle istanze di $N$-Regine affrontate nel progetto. 
+Purtroppo l'enumerazione è molto più complessa in quanto il risolutore deve attraversare tutto l'albero di ricerca e non può fermarsi alla prima soluzione trovata, pertanto l'enumerazione delle soluzioni è stata effettuata fino a $15$-Regine.
+
+Il risultato ottenuto è riportato nella tabella \ref{table:sol}, dalla quale è possibile notare la crescita esponenziale del numero di soluzioni e che $6$-Regine ha meno soluzioni di $5$-Regine.
+
+\begin{table}[]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|c|}
+\hline
+\textbf{N}   & 1 & 2 & 3 & 4 & 5  & 6 & 7  & 8  & 9   & 10  & 11   & 12    & 13    & 14     & 15      \\ \hline
+\textbf{\#Sol} & 1 & 0 & 0 & 2 & 10 & 4 & 40 & 92 & 352 & 724 & 2680 & 14200 & 73712 & 365596 & 2279184 \\ \hline
+\end{tabular}
+}
+\caption{Numero di soluzioni per $N$-Regine}
+\label{my-label}
+\end{table}
+
+

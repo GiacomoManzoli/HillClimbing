@@ -3,7 +3,7 @@
 from base_search import BaseSearch
 from node import Node
 
-import util
+from util import util
 
 
 
@@ -24,12 +24,9 @@ class HillClimbingSearch(BaseSearch):
         while True:
             if problem.goal_test(current.state):
                 break
-            
             neighbors = current.expand(problem)
             if not neighbors:
                 break
-
-
 
             if self.__minimize:
                 neighbor = util.argmin_random_tie(neighbors,
